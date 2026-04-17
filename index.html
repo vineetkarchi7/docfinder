@@ -675,7 +675,7 @@ async function send(){
   try{
     const recent=cHist.slice(-8);
     const content='Preferred language: '+cLang+'. Respond in '+cLang+' unless user writes differently.\n\nHistory:\n'+recent.slice(0,-1).map(m=>m.role+': '+m.content).join('\n')+'\n\nUser: '+txt;
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:CSYS,messages:[{role:'user',content:content}]})});
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':'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','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:CSYS,messages:[{role:'user',content:content}]})});
     if(!res.ok)throw new Error('API '+res.status);
     const data=await res.json();rmTyping();
     if(data.content&&data.content[0]){const r=data.content[0].text;addMsg('ai',r);cHist.push({role:'assistant',content:r});document.getElementById('csStat').textContent='Online · All Indian languages';}
